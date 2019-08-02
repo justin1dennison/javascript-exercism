@@ -7,11 +7,9 @@ const step = n =>
   3 * n + 1
 
 export const steps = n => {
-  if(n === 0 || n < 0) 
+  if(n <= 0) 
 	throw Error('Only positive numbers are allowed')
-  if(n === 1) return 0
-  let count = 0
-  let start = n
+  let [count, start] = [0, n]
   while(start != 1) {
      count += 1
      start = step(start) 
