@@ -13,12 +13,9 @@ const COLORS = [
 ]
 
 export const value = colors => 
-  parseInt(
-   colors 
+   +colors 
      .map(e => COLORS.indexOf(e))
-     .join(''), 
-   10
-  )
+     .join('')
   
   
 
