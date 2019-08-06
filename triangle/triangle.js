@@ -1,49 +1,26 @@
-
-const types = {
-   SCALENE: 'scalene',
-   ISOSCELES: 'isosceles',
-   EQUILATERAL: 'equilateral'
-}
-const any = conditions => 
-  conditions.reduce((acc, n) => 
-	  acc || n, false)
-
+const or = (left, right) => left || right
+const any = conditions => conditions.reduce(or, false)
 const lte = n => val => val <= n
-
 const lteZero = lte(0)
-
-const satisfiesTriangleInequality = ([a, b, c]) => 
-	a + b >= c &&
-	b + c >= a &&
-	c + a >= b 
+const sub = (left, right) => left - right
 
 export class Triangle {
   constructor(x, y, z) {
-    this.x = x
-    this.y = y
-    this.z = z
+    this.sides = [x, y, z].sort(sub)
   }
 
   kind() {
-    const sides = [this.x, this.y, this.z]
-    if(any(sides.map(lteZero))) 
+    const [x, y, z] = this.sides
+    if(any(this.sides.map(lteZero))) 
 	  throw new Error('Negative Side Lengths')
-    if(!satisfiesTriangleInequality(sides)) 
-	  throw new Error()
-    if(
-	    this.x === this.y && 
-	    this.x === this.z && 
-	    this.y === this.z
-    )  {
-	  return types.EQUILATERAL
-    } else if(
-	    this.x === this.y || 
-	    this.y === this.z || 
-	    this.x === this.z
-    )  {
-	  return types.ISOSCELES
+    if(!(z <= x + y))
+	  throw new Error('Triangle Inequality not satisfied')
+    if(x === z)  {
+	return 'equilateral'
+    } else if(x === y || y === z)  {
+	return 'isosceles'
     } else {
-    	return types.SCALENE
+    	return 'scalene'
     }
   }
 }
