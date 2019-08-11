@@ -1,24 +1,16 @@
-const secondsPerYear  = planet => {
-    const earth = 31557600
-    switch(planet) {
-    case 'mercury':
-        return 0.2408467 * earth
-    case 'venus':
-        return 0.61519726 * earth
-    case 'mars':
-        return 1.8808158 * earth
-    case 'jupiter':
-        return 11.862615 * earth
-    case 'saturn':
-        return 29.447498 * earth
-    case 'uranus':
-        return 84.016846 * earth
-    case 'neptune':
-        return 164.79132 * earth
-    default:
-        return earth
-    }
+const SECONDS_IN_EARTH_YEAR = 31557600
+const PLANET_YEAR_PER_EARTH_YEAR =  {
+    mercury: 0.2408467,
+    venus: 0.61519726,
+    earth: 1.0,
+    mars: 1.8808158 ,
+    jupiter: 11.862615,
+    saturn: 29.447498,
+    uranus: 84.016846,
+    neptune: 164.79132 
 }
+const secondsPerYear  = planet =>
+    SECONDS_IN_EARTH_YEAR * PLANET_YEAR_PER_EARTH_YEAR[planet]
 const round = (n, places=2) =>
-      Math.round(n * Math.pow(10, places)) / Math.pow(10, places)
+    Math.round(n * Math.pow(10, places)) / Math.pow(10, places)
 export const age = (planet, seconds) => round(seconds / secondsPerYear(planet))
