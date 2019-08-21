@@ -32,4 +32,10 @@ describe('Space Age', () => {
   test('age on Neptune', () => {
     expect(age('neptune', 1821023456)).toEqual(0.35);
   });
+
+  test('age on an invalid planet', () => {
+      expect(() => {
+          age('pluto', 10000000000)
+      }).toThrow();
+  });
 });
