@@ -27,11 +27,7 @@ const groups = function* groups(s){
     }
 }
 
-const repeat = (s, n) => {
-    const result = []
-    for(let i = 0; i < n; i += 1) result.push(s)
-    return result.join('')
-}
+
 
 export const encode = s =>
     [...partition(s)]
@@ -40,5 +36,5 @@ export const encode = s =>
 
 export const decode = s =>
     [...groups(s)]
-    .map(([count, letter]) => repeat(letter, count))
+    .map(([count, letter]) => letter.repeat(count))
     .join('')
