@@ -4,23 +4,22 @@ const question = /\?$/
 const empty = ''
 const removePunctuation = s => s.replace(punctuation, empty)
 const removeSpaces = s => s.replace(space, empty)
-const asCharCodes = s => [...s].map((_, i) => s.charCodeAt(i))
-const justNumbers = s => asCharCodes(removeSpaces(s))
-	.every(c => c <= 57 && c >= 48)
+const justNumbers = s => [...removeSpaces(s)].every(c => c <= '9' && c >= '0')
 const isShouting = message => {
-    const transformed = removePunctuation(message.trim())
+    const transformed = removePunctuation(message)
     return transformed.toUpperCase() === transformed && !justNumbers(transformed)
 }
-const isQuestion = message => question.test(message.trim()) 
-const isSilent = message => message.trim().length === 0
+const isQuestion = message => question.test(message) 
+const isSilent = message => message.length === 0
 export const hey = message => {
-    if(isSilent(message))
+    const trimmed = message.trim()
+    if(isSilent(trimmed))
 	return "Fine. Be that way!"
-    if(isShouting(message) && isQuestion(message))
+    if(isShouting(trimmed) && isQuestion(trimmed))
         return "Calm down, I know what I'm doing!"
-    if(isShouting(message)) 
+    if(isShouting(trimmed)) 
         return "Whoa, chill out!"
-    if(isQuestion(message)) 
+    if(isQuestion(trimmed)) 
         return "Sure."
     return "Whatever."
 }
